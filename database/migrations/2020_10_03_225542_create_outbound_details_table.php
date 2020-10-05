@@ -17,7 +17,10 @@ class CreateOutboundDetailsTable extends Migration
             $table->id();
             $table->integer('qty');
             $table->integer('total');
+            $table->foreignId('faktur_outbound');
             $table->timestamps();
+
+            $table->foreign('faktur_outbound')->references('faktur')->on('outbounds')->onDelete('cascade');
         });
     }
 
