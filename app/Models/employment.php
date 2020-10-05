@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\outbound;
 use App\Models\department;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,5 +15,9 @@ class employment extends Model
     public function department()
     {
         return $this->belongsTo(department::class);
+    }
+    public function outbound()
+    {
+        return $this->belongsTo(outbound::class);
     }
 }

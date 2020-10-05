@@ -18,7 +18,10 @@ class CreateOutboundsTable extends Migration
             // $table->string('faktur', 25)->primary_key();
             $table->date('date');
             $table->integer('total');
+            $table->foreignId('id_employment');
             $table->timestamps();
+
+            $table->foreign('id_employment')->references('nip')->on('employments')->onDelete('cascade');
         });
     }
 
