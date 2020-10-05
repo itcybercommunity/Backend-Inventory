@@ -14,12 +14,13 @@ class CreatePosTable extends Migration
     public function up()
     {
         Schema::create('pos', function (Blueprint $table) {
-            // $table->id('faktur');
-            $table->string('faktur', 25)->primary_key();
+            $table->id('faktur');
+            // $table->string('faktur', 25)->primary_key();
             $table->date('date');
             $table->integer('total');
             $table->string('status', 20);
             $table->timestamps();
+
         });
     }
 

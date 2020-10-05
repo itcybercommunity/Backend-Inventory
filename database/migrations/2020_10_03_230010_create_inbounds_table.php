@@ -14,12 +14,16 @@ class CreateInboundsTable extends Migration
     public function up()
     {
         Schema::create('inbounds', function (Blueprint $table) {
-            // $table->id('faktur');
-            $table->string('faktur', 25)->primary_key();
+            $table->id('faktur');
+            // $table->string('faktur', 25)->primary_key();
+            $table->foreignId('faktur_po');
             $table->date('date');
             $table->integer('total');
             $table->string('status', 20);
             $table->timestamps();
+
+            $table->foreign('faktur_po')->references('faktur')->on('pos')->onDelete('cascade');
+
         });
     }
 
