@@ -21,7 +21,10 @@ class CreateEmploymentsTable extends Migration
             $table->string('password', 255);
             $table->string('phone', 14);
             $table->text('address');
+            $table->foreignId('id_department');
             $table->timestamps();
+
+            $table->foreign('id_department')->references('id')->on('departments')->onDelete('cascade');
         });
     }
 

@@ -14,8 +14,8 @@ class CreateOutboundsTable extends Migration
     public function up()
     {
         Schema::create('outbounds', function (Blueprint $table) {
-            // $table->id('faktur');
-            $table->string('faktur', 25)->primary_key();
+            $table->id('faktur');
+            // $table->string('faktur', 25)->primary_key();
             $table->date('date');
             $table->integer('total');
             $table->timestamps();
