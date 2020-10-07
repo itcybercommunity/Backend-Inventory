@@ -14,8 +14,13 @@ class CreateRoadblocksTable extends Migration
     public function up()
     {
         Schema::create('roadblocks', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
+            $table->foreignId('faktur_outbound');
+            $table->foreignId('id_employment');
             $table->timestamps();
+
+            $table->foreign('faktur_outbound')->references('faktur')->on('outbounds')->onDelete('cascade');
+            $table->foreign('id_employment')->references('nip')->on('employments')->onDelete('cascade');
         });
     }
 

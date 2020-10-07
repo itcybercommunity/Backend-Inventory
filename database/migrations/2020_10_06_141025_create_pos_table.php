@@ -15,12 +15,15 @@ class CreatePosTable extends Migration
     {
         Schema::create('pos', function (Blueprint $table) {
             $table->id('faktur');
-            // $table->string('faktur', 25)->primary_key();
             $table->date('date');
             $table->integer('total');
+            $table->foreignId('id_employment');
+            $table->foreignId('id_supplier');
             $table->string('status', 20);
             $table->timestamps();
 
+            $table->foreign('id_employment')->references('nip')->on('employments')->onDelete('cascade');
+            $table->foreign('id_supplier')->references('id')->on('suppliers')->onDelete('cascade');
         });
     }
 

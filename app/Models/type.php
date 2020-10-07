@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class type extends Model
 {
     use HasFactory;
-    protected $fillable=['type'];
+    protected $fillable = ['type'];
 
-    public function product()     
+    public function products()
     {
-        return $this->hasOne(product::class);
+        return $this->hasMany(product::class);
     }
 }

@@ -15,12 +15,13 @@ class CreateOutboundsTable extends Migration
     {
         Schema::create('outbounds', function (Blueprint $table) {
             $table->id('faktur');
-            // $table->string('faktur', 25)->primary_key();
+            $table->foreignId('id_customer');
+            $table->foreignId('id_employment');
             $table->date('date');
             $table->integer('total');
-            $table->foreignId('id_employment');
             $table->timestamps();
 
+            $table->foreign('id_customer')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('id_employment')->references('nip')->on('employments')->onDelete('cascade');
         });
     }

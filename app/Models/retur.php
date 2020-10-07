@@ -2,10 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\roadblock;
+use App\Models\outbound_detail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class retur extends Model
 {
     use HasFactory;
+    protected $filable = ['date', 'qty','reason'];
+
+    public function outbound_detail()
+    {
+        return $this->hasOne(outbound_detail::class);
+    }
+    public function roadblock()
+    {
+        return $this->hasOne(roadblock::class);
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRetursTable extends Migration
+class CreateSuppliersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateRetursTable extends Migration
      */
     public function up()
     {
-        Schema::create('returs', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->integer('qty');
-            $table->string('reason', 50);
+            $table->string('name', 20);
+            $table->text('address');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateRetursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('returs');
+        Schema::dropIfExists('suppliers');
     }
 }

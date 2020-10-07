@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePoDetailsTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreatePoDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('po_details', function (Blueprint $table) {
-            $table->id();
-            $table->integer('qty');
-            $table->integer('price');
+        Schema::create('products', function (Blueprint $table) {
+            $table->id('code');
+            $table->string('name', 20);
+            $table->foreignId('id_type');
             $table->timestamps();
+
+            $table->foreign('id_type')->references('id')->on('types')->onDelete('cascade');
         });
     }
 
@@ -28,6 +30,6 @@ class CreatePoDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('po_details');
+        Schema::dropIfExists('products');
     }
 }

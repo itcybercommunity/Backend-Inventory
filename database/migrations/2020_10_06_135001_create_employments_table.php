@@ -15,9 +15,9 @@ class CreateEmploymentsTable extends Migration
     {
         Schema::create('employments', function (Blueprint $table) {
             $table->id('nip');
-            $table->string('name', 50);
-            $table->integer('gender');
-            $table->string('email', 50);
+            $table->string('name', 20);
+            $table->string('gender', 10);
+            $table->string('email', 20);
             $table->string('password', 255);
             $table->string('phone', 14);
             $table->text('address');

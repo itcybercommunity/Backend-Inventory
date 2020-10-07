@@ -14,10 +14,15 @@ class CreateInboundDetailsTable extends Migration
     public function up()
     {
         Schema::create('inbound_details', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
+            $table->foreignId('faktur_inbound');
+            $table->foreignId('faktur_po_detail');
             $table->integer('qty');
             $table->integer('price_sell');
             $table->timestamps();
+
+            $table->foreign('faktur_inbound')->references('faktur')->on('inbounds')->onDelete('cascade');
+            $table->foreign('faktur_po_detail')->references('id')->on('po_details')->onDelete('cascade');
         });
     }
 

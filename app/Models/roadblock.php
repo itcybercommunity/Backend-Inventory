@@ -2,10 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\retur;
+use App\Models\outbound;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class roadblock extends Model
 {
     use HasFactory;
+
+    public function outbound()
+    {
+        return $this->belongsTo(outbound::class);
+    }
+
+    public function retur()
+    {
+        return $this->belongsTo(retur::class);
+    }
 }
