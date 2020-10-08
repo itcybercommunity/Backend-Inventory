@@ -35,3 +35,12 @@ Route::post('/customer/store', [CustomerController::class, 'store']);
 Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
 Route::put('/customer/update/{id}', [CustomerController::class, 'update']);
 Route::get('/customer/delete/{id}', [CustomerController::class, 'destroy']);
+
+
+//Department
+Route::get('/department', [DepartmentController::class, 'index']);
+Route::get('/department/create', [DepartmentController::class, 'create']);
+Route::post('/department/store', [DepartmentController::class, 'store']);
+Route::get('/department/edit/{id}', [DepartmentController::class, 'edit']);
+Route::put('/department/update/{id}', [DepartmentController::class, 'update']);
+Route::get('/department/delete/{id}', [DepartmentController::class, 'destroy']);
