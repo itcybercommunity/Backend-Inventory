@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function(){
     return view('welcome');
 });
+
+//Suplier
+Route::get('/supplier', [SupplierController::class, 'index']);
+Route::get('/supplier/create', [SupplierController::class, 'create']);
+Route::post('/supplier/store', [SupplierController::class, 'store']);
+Route::get('/supplier/edit/{id}', [SupplierController::class, 'edit']);
+Route::put('/supplier/update/{id}', [SupplierController::class, 'update']);
+Route::get('/supplier/delete/{id}', [SupplierController::class, 'destroy']);
