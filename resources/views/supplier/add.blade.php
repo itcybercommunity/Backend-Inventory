@@ -33,11 +33,11 @@
                             <label>Alamat</label>
                             <textarea name="address" class="form-control" placeholder="Alamat Supplier .."></textarea>
 
-                             @if($errors->has('address'))
-                                <div class="text-danger">
-                                    {{ $errors->first('address')}}
-                                </div>
-                            @endif
+                            @error('address')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                            @enderror
 
                         </div>
 

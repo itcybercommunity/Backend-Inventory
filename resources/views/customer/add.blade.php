@@ -9,18 +9,17 @@
         <div class="container">
             <div class="card mt-5">
                 <div class="card-body">
-                    <a href="{{ '/supplier' }}" class="btn btn-primary">Kembali</a>
+                    <a href="{{ '/customer' }}" class="btn btn-primary">Kembali</a>
                     <br/>
                     <br/>
                     
-                    <form method="post" action="{{ '/supplier/update/'.$supplier->id }}">
+                    <form action="{{ '/customer/store' }}" method="POST">
 
                         {{ csrf_field() }}
-                        {{ method_field('PUT') }}
 
                         <div class="form-group">
                             <label>Nama</label>
-                            <input type="text" name="name" class="form-control" placeholder="Nama Supplier .." value="{{ $supplier->name }}">
+                            <input type="text" name="name" class="form-control" placeholder="Nama Customer ..">
 
                            @error('name')
                            <div class="text-danger">
@@ -32,7 +31,7 @@
 
                         <div class="form-group">
                             <label>Alamat</label>
-                            <textarea name="address" class="form-control" placeholder="Alamat Supplier ..">{{ $supplier->address }}</textarea>
+                            <textarea name="address" class="form-control" placeholder="Alamat Customer .."></textarea>
 
                             @error('address')
                             <div class="text-danger">

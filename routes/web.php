@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DepartmentController;
 
@@ -26,3 +27,11 @@ Route::post('/supplier/store', [SupplierController::class, 'store']);
 Route::get('/supplier/edit/{id}', [SupplierController::class, 'edit']);
 Route::put('/supplier/update/{id}', [SupplierController::class, 'update']);
 Route::get('/supplier/delete/{id}', [SupplierController::class, 'destroy']);
+
+//Custommer
+Route::get('/customer', [CustomerController::class, 'index']);
+Route::get('/customer/create', [CustomerController::class, 'create']);
+Route::post('/customer/store', [CustomerController::class, 'store']);
+Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
+Route::put('/customer/update/{id}', [CustomerController::class, 'update']);
+Route::get('/customer/delete/{id}', [CustomerController::class, 'destroy']);
