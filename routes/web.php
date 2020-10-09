@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmploymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,12 @@ Route::post('/department/store', [DepartmentController::class, 'store']);
 Route::get('/department/edit/{id}', [DepartmentController::class, 'edit']);
 Route::put('/department/update/{id}', [DepartmentController::class, 'update']);
 Route::get('/department/delete/{id}', [DepartmentController::class, 'destroy']);
+
+
+//Department
+Route::get('/employment', [EmploymentController::class, 'index']);
+Route::get('/employment/create', [EmploymentController::class, 'create']);
+Route::post('/employment/store', [EmploymentController::class, 'store']);
+Route::get('/employment/edit/{id}', [EmploymentController::class, 'edit']);
+Route::put('/employment/update/{id}', [EmploymentController::class, 'update']);
+Route::get('/employment/delete/{id}', [EmploymentController::class, 'destroy']);
