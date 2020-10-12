@@ -11,8 +11,8 @@ class department extends Model
     use HasFactory;
     protected $fillable = ['name'];
 
-    public function employments()
+    public function employment()
     {
-        return $this->hasMany(employment::class);
+        return $this->hasMany('App\Models\employment');
     }
 }

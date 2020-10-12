@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class employment extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'gender','email', 'password', 'phone', 'address'];
+    protected $fillable = ['name', 'gender','email', 'password', 'phone', 'address', 'id_department'];
 
     public function department()
     {
-        return $this->belongsTo(department::class);
+        return $this->belongsTo(department::class, "id_department", "id");
     }
 
     public function outbounds()

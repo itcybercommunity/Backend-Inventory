@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\department;
 use App\Models\employment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EmploymentController extends Controller
 {
@@ -12,11 +14,18 @@ class EmploymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return $employment = employment::with('department')->get();
-        // return view('employment.index', ['employment' => $employment]);
+        if ($request->has('jabatan')) {
+            $employment = employment::where('id_department', 'LIKE', '%'.$request->jabatan.'%')->get();            
+        }else {
+            $employment = employment::with('department')->get();
+        }
+        $department = department::all();
+
+        
+         return view('employment.index', ['employment' => $employment, 'department'=>$department]);
     }
 
     /**
@@ -27,6 +36,9 @@ class EmploymentController extends Controller
     public function create()
     {
         //
+        $department = department::all();
+
+        return view('employment.add', ['department' => $department]);
     }
 
     /**
@@ -38,6 +50,28 @@ class EmploymentController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'name' => 'required',
+            'gender' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'department' => 'required',
+        ]);
+
+        employment::create([
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'id_department' => $request->department
+        ]);
+
+        return redirect('/employment')->with('message', 'Data Berhasil Disimpan');
+
     }
 
     /**
@@ -83,5 +117,9 @@ class EmploymentController extends Controller
     public function destroy($id)
     {
         //
+       $employment = employment::where('nip',$id);
+       $employment->delete();
+
+        return redirect('/employment')->with('message', 'Data Berhasil Di Hapus');
     }
 }
