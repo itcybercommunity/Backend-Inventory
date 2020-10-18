@@ -51,4 +51,6 @@ Route::get('/department/delete/{id}', [DepartmentController::class, 'destroy']);
 Route::get('/employment', [EmploymentController::class, 'index']);
 Route::get('/employment/create', [EmploymentController::class, 'create']);
 Route::post('/employment/store', [EmploymentController::class, 'store']);
+Route::get('/employment/edit/{id}', [EmploymentController::class, 'edit']);
+Route::put('/employment/update/{id}', [EmploymentController::class, 'update']);
 Route::get('/employment/delete/{id}', [EmploymentController::class, 'destroy']);

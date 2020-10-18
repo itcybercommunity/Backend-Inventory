@@ -94,6 +94,9 @@ class EmploymentController extends Controller
     public function edit($id)
     {
         //
+        $employment = employment::find($id);
+        $department = department::all();
+        return view('employment.update', ['employment'=> $employment, 'department' => $department]);
     }
 
     /**
@@ -106,6 +109,28 @@ class EmploymentController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'name' => 'required',
+            'gender' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'department' => 'required',
+        ]);
+
+        $employment = employment::find($id);
+        $employment->name = $request->name;
+        $employment->gender = $request->gender;
+        $employment->email = $request->email;
+        $employment->password = bcrypt($request->password);
+        $employment->phone = $request->phone;
+        $employment->address = $request->address;
+        $employment->id_department = $request->department;
+
+        $employment->save();
+        return redirect('/employment')->with('message', 'Data Berhasil Disimpan');
+
     }
 
     /**

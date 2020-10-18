@@ -48,6 +48,7 @@
                                 <td>{{ $row->address }}</td>
                                 <td>{{ $row->department['name'] }}</td>
                                 <td>
+                                    <a href="{{ '/employment/edit/'.$row->nip }}" class="btn btn-warning">Edit</a>
                                     <a href="{{ '/employment/delete/'.$row->nip }}" class="btn btn-danger" onclick="return confirm('Yakin Data Mau Dihapus ? ')">Hapus</a>
                                 </td>
                             </tr>

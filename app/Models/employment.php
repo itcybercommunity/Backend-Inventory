@@ -12,6 +12,7 @@ class employment extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'gender','email', 'password', 'phone', 'address', 'id_department'];
+    protected $primaryKey = "nip";
 
     public function department()
     {
