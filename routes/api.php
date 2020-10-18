@@ -21,8 +21,7 @@ use App\Http\Controllers\PoController;
 Route::group(['prefix'=> 'v1'], function()
 {
    Route::resource('po', PoController::class,[
-    'except' => ['show', 'update', 'delete']
+    'except' => ['show']
    ]); 
-   Route::put('/po/{id}', [PoController::class, 'update']);
-   Route::delete('/po/{id}', [PoController::class, 'destroy']);
+   
 }); 
