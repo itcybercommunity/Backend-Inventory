@@ -14,7 +14,7 @@ class po extends Model
     use HasFactory;
     protected $fillable = ['date', 'total','id_employment', 'id_supplier', 'status'];
     protected $hidden =['created_at', 'updated_at'];
-
+    protected $primaryKey = "faktur";
     public function supplier()
     {
         return $this->belongsTo(supplier::class);
