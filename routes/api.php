@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PoController;
+use App\Http\Controllers\TypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,10 @@ Route::group(['prefix'=> 'v1'], function()
 {
    Route::resource('po', PoController::class,[
     'except' => ['show']
-   ]); 
+   ]);
+   
+   Route::resource('type', TypeController::class,[
+      'except' => ['show']
+   ]);
    
 }); 
