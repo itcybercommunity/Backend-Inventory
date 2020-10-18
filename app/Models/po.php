@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class po extends Model
 {
     use HasFactory;
-    protected $fillable = ['date', 'total', 'status'];
+    protected $fillable = ['date', 'total','id_employment', 'id_supplier', 'status'];
+    protected $hidden =['created_at', 'updated_at'];
 
     public function supplier()
     {
