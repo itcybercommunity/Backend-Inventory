@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PoController;
 use App\Http\Controllers\TypeController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,7 @@ Route::group(['prefix'=> 'v1'], function()
       'except' => ['show']
    ]);
    
+   Route::resource('product', ProductController::class,[
+      'except' => ['show']
+   ]);
 }); 

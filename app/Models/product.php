@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class product extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'type'];
+    protected $fillable = ['name', 'id_type'];
+    protected $primaryKey = "code";
 
     public function type()
     {
