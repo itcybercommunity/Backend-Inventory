@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DepartmentController;
@@ -20,6 +21,11 @@ use App\Http\Controllers\EmploymentController;
 Route::get('/', function(){
     return view('welcome');
 });
+
+//Login
+Route::get('login', [AuthController::class, 'index']);
+Route::post('proses_login', [AuthController::class, 'proses_login']);
+Route::post('logout', [AuthController::class, 'logout']);
 
 //Suplier
 Route::get('/supplier', [SupplierController::class, 'index']);
