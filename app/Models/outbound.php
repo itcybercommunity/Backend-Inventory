@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class outbound extends Model
 {
     use HasFactory;
-    protected $fillable=['date', 'total'];
+    protected $fillable=['id_customer', 'id_employment','date', 'total'];
 
     public function employment()
     {

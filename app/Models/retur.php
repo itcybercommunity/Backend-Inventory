@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class retur extends Model
 {
     use HasFactory;
-    protected $filable = ['date', 'qty','reason'];
+    protected $filable = ['date', 'qty','reason', 'id_outbound_detail', 'id_roadblock'];
 
     public function outbound_detail()
     {

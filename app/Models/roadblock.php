@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class roadblock extends Model
 {
     use HasFactory;
+    protected $fillable = ['faktur_outbound', 'id_employment'];
 
     public function outbound()
     {

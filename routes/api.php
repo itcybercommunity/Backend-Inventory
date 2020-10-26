@@ -4,7 +4,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PoController;
 use App\Http\Controllers\TypeController;
+use App\Http\Controllers\ReturController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OutboundController;
+use App\Http\Controllers\RoadblockController;
+use App\Http\Controllers\OutboundDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +36,18 @@ Route::group(['prefix'=> 'v1'], function()
    
    Route::resource('product', ProductController::class,[
       'except' => ['show']
+   ]);
+   Route::resource('penjualan', OutboundDetailController::class, [
+      'except' => ['show']
+   ]);
+   Route::resource('outbound', OutboundController::class,[
+      'except' => ['edit']
+   ]);
+   Route::resource('retur', ReturController::class,[
+      'only' => ['index','store']
+   ]);
+
+   Route::resource('roadblock', RoadblockController::class,[
+     'only'=> ['index', 'store']
    ]);
 }); 

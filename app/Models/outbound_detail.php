@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class outbound_detail extends Model
 {
     use HasFactory;
-    protected $fillable = ['qty', 'total'];
+    protected $fillable = ['faktur_outbound', 'id_inbound_detail','qty', 'total'];
 
     public function inbound_detail()
     {
