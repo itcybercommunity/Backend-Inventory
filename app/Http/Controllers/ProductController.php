@@ -17,19 +17,20 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
-        $product = product::all();
-
         // $stok = DB::table('outbound_details')->select('outbound_details.qty', 'inbound_details.qty as qtyInbound')->join('inbound_details', 'inbound_details.id', '=', 'outbound_details.id')->get();
         
         // $stok = DB::table('inbound_details')->join('outbound_details', 'inbound_details.id', '=', 'outbound_details.id')->select(DB::raw('(inbound_details.qty-outbound_details.qty) as total'));
+
+        $product = product::all();
         
-        $stok = DB::raw("SELECT (i.qty-o.qty)  from inbound_details i JOIN outbound_details o ON i.id = o.faktur_inbound__detail");
+        $stok = DB::table('inbound_details')->select(DB::raw('(inbound_details.qty - outbound_details.qty ) as total '))
+          ->Join('outbound_details','outbound_details.faktur_inbound_detail','=','inbound_details.id')
+          ->get();
 
         return response()->json([
             "msg" => "GET method Success",
-            "data" => $product,
-            "stok" => $stok
+            "data" => [$product, $stok],
+            // "stok" => $stok
         ]);
     }
 
