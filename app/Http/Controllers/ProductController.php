@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use Illuminate\Http\Request;
+use App\Models\inbound_detail;
+use App\Models\outbound_detail;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -16,9 +19,17 @@ class ProductController extends Controller
     {
         //
         $product = product::all();
+
+        // $stok = DB::table('outbound_details')->select('outbound_details.qty', 'inbound_details.qty as qtyInbound')->join('inbound_details', 'inbound_details.id', '=', 'outbound_details.id')->get();
+        
+        // $stok = DB::table('inbound_details')->join('outbound_details', 'inbound_details.id', '=', 'outbound_details.id')->select(DB::raw('(inbound_details.qty-outbound_details.qty) as total'));
+        
+        $stok = DB::raw("SELECT (i.qty-o.qty)  from inbound_details i JOIN outbound_details o ON i.id = o.faktur_inbound__detail");
+
         return response()->json([
             "msg" => "GET method Success",
-            "data" => $product
+            "data" => $product,
+            "stok" => $stok
         ]);
     }
 

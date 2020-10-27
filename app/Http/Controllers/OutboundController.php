@@ -107,4 +107,12 @@ class OutboundController extends Controller
         //
       
     }
+    public function cetak_laporan($tgl_awal, $tgl_akhir)
+    {
+        // dd("Tanggal Awal".$tgl_awal. "Tanggal Akhir". $tgl_akhir);
+        $cetak = outbound::whereBetween('date', [$tgl_awal, $tgl_akhir])->get();
+
+        // dd($cetak);
+        return view('laporan.penjualan',['outbound'=>$cetak]);
+    }
 }

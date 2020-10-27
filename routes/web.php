@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OutboundController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmploymentController;
+use App\Http\Controllers\OutboundDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +62,6 @@ Route::post('/employment/store', [EmploymentController::class, 'store']);
 Route::get('/employment/edit/{id}', [EmploymentController::class, 'edit']);
 Route::put('/employment/update/{id}', [EmploymentController::class, 'update']);
 Route::get('/employment/delete/{id}', [EmploymentController::class, 'destroy']);
+
+//Laporan
+Route::get('/cetak-laporan-penjualan/{tgl_awal}/{tgl_akhir}', [OutboundController::class, 'cetak_laporan']);

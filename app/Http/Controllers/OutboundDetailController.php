@@ -136,4 +136,6 @@ class OutboundDetailController extends Controller
             "msg" => "Delete Method Failed ".$id. " Not Found"
         ], 400);
     }
+
+
 }
