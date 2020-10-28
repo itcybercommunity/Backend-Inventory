@@ -9,7 +9,7 @@
                        <input type="date" name="tgl_akhir" class="form-control" id="tgl_akhir">
                        <br>
 
-                        <a href="" onclick="this.href='/cetak_laporan_penjualan/'+document.getElementById('tgl_awal').value +'/'+ document.getElementById('tgl_akhir').value" target="_blank" class="btn btn-primary col-md-12">Cetak</a>
+                        <a href="" onclick="this.href='/cetak_laporan_brg_masuk/'+document.getElementById('tgl_awal').value +'/'+ document.getElementById('tgl_akhir').value" target="_blank" class="btn btn-primary col-md-12">Cetak</a>
 
                         @error('tgl_awal')
                         <div class="text-danger">

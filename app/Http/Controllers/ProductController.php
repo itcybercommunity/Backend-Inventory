@@ -136,4 +136,25 @@ class ProductController extends Controller
             "msg" => "Delete Method Failed, ID ". $id . " Not Found"
         ], 400);
     }
+    public function laporan_produk()
+    {
+        return view('laporan.produk');
+    }
+
+    public function cetak_laporan($tgl_awal, $tgl_akhir)
+    {
+        // dd("Tanggal Awal".$tgl_awal. "Tanggal Akhir". $tgl_akhir);
+        $this->validate($request, [
+            'tgl_awal' => 'required|date',
+            'tgl_akhir' => 'required|date',
+        ]);
+        
+        $cetak = product::whereBetween('created_at', [$tgl_awal, $tgl_akhir])->get();
+        $stok = DB::table('inbound_details')->select(DB::raw('(inbound_details.qty - outbound_details.qty ) as total '))
+          ->Join('outbound_details','outbound_details.faktur_inbound_detail','=','inbound_details.id')
+          ->get();
+
+        // dd($cetak);
+        return view('laporan.cetak_produk',['produk'=>$cetak, 'stok'=> $stok ]);
+    }
 }

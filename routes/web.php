@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ReturController;
+use App\Http\Controllers\InboundController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OutboundController;
 use App\Http\Controllers\SupplierController;
@@ -64,4 +67,11 @@ Route::put('/employment/update/{id}', [EmploymentController::class, 'update']);
 Route::get('/employment/delete/{id}', [EmploymentController::class, 'destroy']);
 
 //Laporan
-Route::get('/cetak-laporan-penjualan/{tgl_awal}/{tgl_akhir}', [OutboundController::class, 'cetak_laporan']);
+Route::get('/laporan_penjualan', [OutboundController::class, 'laporan_penjualan']);
+Route::get('/cetak_laporan_penjualan/{tgl_awal}/{tgl_akhir}', [OutboundController::class, 'cetak_laporan']);
+Route::get('/laporan_brg_masuk', [InboundController::class, 'laporan_brg_masuk']);
+Route::get('/cetak_laporan_brg_masuk/{tgl_awal}/{tgl_akhir}', [InboundController::class, 'cetak_laporan']);
+Route::get('/laporan_retur', [ReturController::class, 'laporan_retur']);
+Route::get('/cetak_laporan_retur/{tgl_awal}/{tgl_akhir}', [ReturController::class, 'cetak_laporan']);
+Route::get('/laporan_produk', [ProductController::class, 'laporan_produk']);
+Route::get('/cetak_laporan_produk/{tgl_awal}/{tgl_akhir}', [ProductController::class, 'cetak_laporan']);
