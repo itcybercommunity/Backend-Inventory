@@ -17,7 +17,11 @@ class DepartmentController extends Controller
         //
         $department = department::all();
 
-        return view('department.index', ['department' => $department]);
+        // return view('department.index', ['department' => $department]);
+        return response()->json([
+            'msg' => 'Get Method Success',
+            'data' => $department
+        ]);
     }
 
     /**
@@ -40,15 +44,24 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required'
+        // ]);
 
-        department::create([
-            'name' => $request->name
-        ]);
+        // department::create([
+        //     'name' => $request->name
+        // ]);
 
-        return redirect('/department')->with('message', 'Data Berhsil Disimpan');
+        // return redirect('/department')->with('message', 'Data Berhsil Disimpan');
+        $department = new department;
+        $department->name = $request->name;
+
+        $department->save();
+
+        return response()->json([
+            'msg' => 'Post Method Success',
+            'data' => $department
+        ]);
     }
 
     /**
@@ -85,16 +98,30 @@ class DepartmentController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required'
+        // ]);
 
-        $department = department::find($id);
-        $department->name = $request->name;
+        // $department = department::find($id);
+        // $department->name = $request->name;
         
-        $department->save();
+        // $department->save();
 
-        return redirect('/department')->with('message', 'Data Berhasil Diupdate');
+        // return redirect('/department')->with('message', 'Data Berhasil Diupdate');
+        $department = department::where('id', $id)->first();
+        
+        if ($department) {
+        $department->name = $request->name ? $request->name : $department->name;
+        $department->save();
+        return response()->json([
+            'msg' => 'Put Method Success',
+            'data' => $department
+        ], 200);            
+        }
+        return response()->json([
+            'msg' => 'Put Method Success',
+            'data' =>"PUT Method Failed ".$id
+        ], 400);    
     }
 
     /**
@@ -106,9 +133,21 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         //
-        $department = department::find($id);
+        // $department = department::find($id);
 
-        $department->delete();
-        return redirect('/department')->with('message', 'Data Berhasil DiHapus');
+        // $department->delete();
+        // return redirect('/department')->with('message', 'Data Berhasil DiHapus');
+
+        $department =  department::where('id',$id)->first();
+        if ($department) {
+            $department->delete();
+            return response()->json([ 
+                "msg" => "Delete Method Success ". $id
+            ]);
+        }
+        return response()->json([
+            "msg" => "Delete Method Failed ".$id. " Not Found"
+        ], 400);
     }
+    
 }

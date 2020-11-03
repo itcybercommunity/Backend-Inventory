@@ -8,6 +8,7 @@ use App\Http\Controllers\ReturController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OutboundController;
 use App\Http\Controllers\RoadblockController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\OutboundDetailController;
 
 /*
@@ -49,5 +50,9 @@ Route::group(['prefix'=> 'v1'], function()
 
    Route::resource('roadblock', RoadblockController::class,[
      'only'=> ['index', 'store']
+   ]);
+
+   Route::resource('department', DepartmentController::class,[
+     'except'=> ['show']
    ]);
 }); 
