@@ -16,7 +16,12 @@ class CustomerController extends Controller
     {
         //
         $customer = customer::all();
-        return view('customer.index', ['customer' => $customer]);
+        // return view('customer.index', ['customer' => $customer]);
+
+        return response()->json([
+            'msg' => "GEt Method Success",
+            'data' => $customer
+        ]);
     }
 
     /**
@@ -39,16 +44,27 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-            'name' => 'required',
-            'address' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'address' => 'required'
+        // ]);
 
-        customer::create([
-            'name' => $request->name,
-            'address' => $request->address
+        // customer::create([
+        //     'name' => $request->name,
+        //     'address' => $request->address
+        // ]);
+        // return redirect('customer')->with('message','Data Berhasil Disimpan');
+
+        $customer = new customer;
+
+        $customer->name = $request->name;
+        $customer->address = $request->address;
+
+        $customer->save();
+        return response()->json([
+            'msg' => 'GEt Method Success',
+            'data' => $customer
         ]);
-        return redirect('customer')->with('message','Data Berhasil Disimpan');
 
     }
 
@@ -86,16 +102,34 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request, [
-            'name' => 'required',
-            'address' => 'required'
-        ]);
-        $customer = customer::find($id);
-        $customer->name = $request->name;
-        $customer->address = $request->address;
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'address' => 'required'
+        // ]);
+        // $customer = customer::find($id);
+        // $customer->name = $request->name;
+        // $customer->address = $request->address;
 
-        $customer->save();
-        return redirect('/customer')->with('message', 'Data Berhasil Diupdate');
+        // $customer->save();
+        // return redirect('/customer')->with('message', 'Data Berhasil Diupdate');
+        
+        $customer = customer::where('id', $id)->first();
+
+        if ($customer) {
+            $customer->name = $request->name ? $request->name : $customer->name;
+            $customer->address = $request->address ? $request->address : $customer->address;
+
+            $customer->save();
+            return response()->json([
+                'msg' => 'Put Method Success',
+                'data' => $customer
+            ]);
+        }
+        return response()->json([
+            "msg" => "PUT Method Failed ".$id
+        ]);
+
+        
     }
 
     /**
@@ -107,9 +141,15 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         //
-        $customer = customer::find($id);
-        $customer->delete();
-
-        return redirect('/customer')->with('message', 'Data Berhasil DiHapus');
+        $customer =  customer::where('id',$id)->first();
+        if ($customer) {
+            $customer->delete();
+            return response()->json([ 
+                "msg" => "Delete Method Success ". $id
+            ]);
+        }
+        return response()->json([
+            "msg" => "Delete Method Failed ".$id. " Not Found"
+        ], 400);
     }
 }
