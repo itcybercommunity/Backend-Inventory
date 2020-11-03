@@ -21,16 +21,16 @@ class ProductController extends Controller
         
         // $stok = DB::table('inbound_details')->join('outbound_details', 'inbound_details.id', '=', 'outbound_details.id')->select(DB::raw('(inbound_details.qty-outbound_details.qty) as total'));
 
-        $product = product::all();
         
-        $stok = DB::table('inbound_details')->select(DB::raw('(inbound_details.qty - outbound_details.qty ) as total '))
-          ->Join('outbound_details','outbound_details.faktur_inbound_detail','=','inbound_details.id')
+        $stok = DB::table('outbound_details')->select(DB::raw('products.code, products.name, inbound_details.qty as barang_masuk, outbound_details.qty as barang_keluar, (inbound_details.qty - outbound_details.qty ) as total '))
+          ->Join('inbound_details','outbound_details.faktur_inbound_detail','=','inbound_details.id')
+          ->Join('po_details','inbound_details.faktur_po_detail','=','po_details.id')
+          ->Join('products','po_details.code_faktur','=','products.code')
           ->get();
 
         return response()->json([
             "msg" => "GET method Success",
-            "data" => [$product, $stok],
-            // "stok" => $stok
+            "data" =>  $stok
         ]);
     }
 
