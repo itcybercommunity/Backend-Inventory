@@ -17,15 +17,22 @@ class EmploymentController extends Controller
     public function index(Request $request)
     {
         //
-        if ($request->has('jabatan')) {
-            $employment = employment::where('id_department', 'LIKE', '%'.$request->jabatan.'%')->get();            
-        }else {
-            $employment = employment::with('department')->get();
-        }
-        $department = department::all();
+        // if ($request->has('jabatan')) {
+        //     $employment = employment::where('id_department', 'LIKE', '%'.$request->jabatan.'%')->get();            
+        // }else {
+        //     $employment = employment::with('department')->get();
+        // }
+        // $department = department::all();
+        $employment = employment::with('department')->get();
+
+        return response()->json([
+            'msg' => 'Get Method Success',
+            'data 1' => $employment,
+            // 'data 2' => $department
+        ]);
 
         
-         return view('employment.index', ['employment' => $employment, 'department'=>$department]);
+        //  return view('employment.index', ['employment' => $employment, 'department'=>$department]);
     }
 
     /**
@@ -50,28 +57,43 @@ class EmploymentController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-            'name' => 'required',
-            'gender' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'department' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'gender' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+        //     'phone' => 'required',
+        //     'address' => 'required',
+        //     'department' => 'required',
+        // ]);
 
-        employment::create([
-            'name' => $request->name,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'id_department' => $request->department
-        ]);
+        // employment::create([
+        //     'name' => $request->name,
+        //     'gender' => $request->gender,
+        //     'email' => $request->email,
+        //     'password' => bcrypt($request->password),
+        //     'phone' => $request->phone,
+        //     'address' => $request->address,
+        //     'id_department' => $request->department
+        // ]);
 
-        return redirect('/employment')->with('message', 'Data Berhasil Disimpan');
+        // return redirect('/employment')->with('message', 'Data Berhasil Disimpan');
 
+        $employment = new employment;
+        $employment->name = $request->name;
+        $employment->gender = $request->gender;
+        $employment->email = $request->email;
+        $employment->password = bcrypt($request->password);
+        $employment->phone = $request->phone;
+        $employment->address = $request->address;
+        $employment->id_department = $request->id_department;
+
+        $employment->save();
+
+        return response()->json([
+            'msg' => 'Post Method Success',
+            'data' => $employment
+        ], 200);
     }
 
     /**
@@ -109,27 +131,48 @@ class EmploymentController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request, [
-            'name' => 'required',
-            'gender' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'department' => 'required',
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'gender' => 'required',
+        //     'email' => 'required',
+        //     'password' => 'required',
+        //     'phone' => 'required',
+        //     'address' => 'required',
+        //     'department' => 'required',
+        // ]);
+
+        // $employment = employment::find($id);
+        // $employment->name = $request->name;
+        // $employment->gender = $request->gender;
+        // $employment->email = $request->email;
+        // $employment->password = bcrypt($request->password);
+        // $employment->phone = $request->phone;
+        // $employment->address = $request->address;
+        // $employment->id_department = $request->department;
+
+        // $employment->save();
+        // return redirect('/employment')->with('message', 'Data Berhasil Disimpan');
+
+        $employment = employment::where('nip',$id)->first();
+
+        if ($employment) {
+            $employment->name = $request->name ? $request->name : $employment->name;
+            $employment->gender = $request->gender ? $request->gender : $employment->gender;
+            $employment->email = $request->email ? $request->email : $employment->email;
+            $employment->password = bcrypt($request->password)? bcrypt($request->password) : $employment->password;
+            $employment->phone = $request->phone? $request->phone : $employment->phone;
+            $employment->address = $request->address? $request->address : $employment->address;
+            $employment->id_department = $request->id_department? $request->id_department : $employment->id_department;
+
+            $employment->save();
+            return response()->json([ 
+                "msg" => "PUT Method Success ",
+                "data" => $employment
+            ]);
+        }
+        return response()->json([
+            "msg" => "PUT Method Failed ".$id
         ]);
-
-        $employment = employment::find($id);
-        $employment->name = $request->name;
-        $employment->gender = $request->gender;
-        $employment->email = $request->email;
-        $employment->password = bcrypt($request->password);
-        $employment->phone = $request->phone;
-        $employment->address = $request->address;
-        $employment->id_department = $request->department;
-
-        $employment->save();
-        return redirect('/employment')->with('message', 'Data Berhasil Disimpan');
 
     }
 
@@ -142,9 +185,19 @@ class EmploymentController extends Controller
     public function destroy($id)
     {
         //
-       $employment = employment::where('nip',$id);
-       $employment->delete();
+    //    $employment = employment::where('nip',$id);
+    //    $employment->delete();
 
-        return redirect('/employment')->with('message', 'Data Berhasil Di Hapus');
+    //     return redirect('/employment')->with('message', 'Data Berhasil Di Hapus');
+    $employment =  employment::where('nip',$id)->first();
+    if ($employment) {
+        $employment->delete();
+        return response()->json([ 
+            "msg" => "Delete Method Success ". $id
+        ]);
+    }
+    return response()->json([
+        "msg" => "Delete Method Failed ".$id. " Not Found"
+    ], 400);
     }
 }

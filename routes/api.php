@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OutboundController;
 use App\Http\Controllers\RoadblockController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmploymentController;
 use App\Http\Controllers\OutboundDetailController;
 
 /*
@@ -53,6 +54,10 @@ Route::group(['prefix'=> 'v1'], function()
    ]);
 
    Route::resource('department', DepartmentController::class,[
+     'except'=> ['show']
+   ]);
+
+   Route::resource('employment', EmploymentController::class,[
      'except'=> ['show']
    ]);
 }); 
