@@ -17,7 +17,11 @@ class SupplierController extends Controller
         $supplier = supplier::all();
 
 
-        return view('supplier.index', ['supplier' => $supplier]);
+        // return view('supplier.index', ['supplier' => $supplier]);
+        return response()->json([
+            'msg' => 'GET Method Success',
+            'data' => $supplier
+        ]);
     }
 
     /**
@@ -39,17 +43,31 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[
-            'name' => 'required',
-            'address' => 'required'
+        // $this->validate($request,[
+        //     'name' => 'required',
+        //     'address' => 'required'
+        // ]);
+
+        // supplier::create([
+        //     'name' => $request->name,
+        //     'address' => $request->address
+        // ]);
+
+        // return redirect('supplier')->with('message', 'Data Berhasil Disimpan');
+
+        $supplier = new supplier;
+
+        $supplier->name = $request->name;
+        $supplier->address = $request->address;
+
+        $supplier->save();
+
+        return response()->json([
+            'msg' => 'Post Method Success',
+            'data' => $supplier
         ]);
 
-        supplier::create([
-            'name' => $request->name,
-            'address' => $request->address
-        ]);
-
-        return redirect('supplier')->with('message', 'Data Berhasil Disimpan');
+        
     }
 
     /**
@@ -86,16 +104,33 @@ class SupplierController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request,[
-            'name' => 'required',
-            'address' => 'required'
-        ]);
-        $supplier = supplier::find($id);
-        $supplier->name = $request->name;
-        $supplier->address = $request->address;
+        // $this->validate($request,[
+        //     'name' => 'required',
+        //     'address' => 'required'
+        // ]);
+        // $supplier = supplier::find($id);
+        // $supplier->name = $request->name;
+        // $supplier->address = $request->address;
 
-        $supplier->save();
-        return redirect('/supplier')->with('message', 'Data Berhasil Diupdate');
+        // $supplier->save();
+        // return redirect('/supplier')->with('message', 'Data Berhasil Diupdate');
+
+        $supplier = supplier::where('id', $id)->first();
+
+        if ($supplier) {
+            $supplier->name = $request->name ? $request->name : $supplier->name;
+            $supplier->address = $request->address ? $request->address : $supplier->address;
+
+            $supplier->save();
+
+            return response()->json([ 
+                "msg" => "PUT Method Success ",
+                "data" => $supplier
+            ]);
+        }
+        return response()->json([
+            "msg" => "PUT Method Failed ".$id
+        ]);
     }
 
     /**
@@ -107,8 +142,19 @@ class SupplierController extends Controller
     public function destroy($id)
     {
         //
-        $supplier = supplier::find($id);
-        $supplier->delete();
-        return redirect('/supplier')->with('message', 'Data Berhasil Dihapus');
+        // $supplier = supplier::find($id);
+        // $supplier->delete();
+        // return redirect('/supplier')->with('message', 'Data Berhasil Dihapus');
+
+        $supplier =  supplier::where('id',$id)->first();
+        if ($supplier) {
+            $supplier->delete();
+            return response()->json([ 
+                "msg" => "Delete Method Success ". $id
+            ]);
+        }
+        return response()->json([
+            "msg" => "Delete Method Failed ".$id. " Not Found"
+        ], 400);
     }
 }
