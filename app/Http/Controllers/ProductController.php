@@ -144,17 +144,17 @@ class ProductController extends Controller
     public function cetak_laporan($tgl_awal, $tgl_akhir)
     {
         // dd("Tanggal Awal".$tgl_awal. "Tanggal Akhir". $tgl_akhir);
-        $this->validate($request, [
-            'tgl_awal' => 'required|date',
-            'tgl_akhir' => 'required|date',
-        ]);
         
-        $cetak = product::whereBetween('created_at', [$tgl_awal, $tgl_akhir])->get();
-        $stok = DB::table('inbound_details')->select(DB::raw('(inbound_details.qty - outbound_details.qty ) as total '))
-          ->Join('outbound_details','outbound_details.faktur_inbound_detail','=','inbound_details.id')
-          ->get();
+          $cetak = DB::table('outbound_details')->select(DB::raw('products.code, products.name, inbound_details.qty as barang_masuk, outbound_details.qty as barang_keluar, (inbound_details.qty - outbound_details.qty ) as total '))
+          ->Join('inbound_details','outbound_details.faktur_inbound_detail','=','inbound_details.id')
+          ->Join('po_details','inbound_details.faktur_po_detail','=','po_details.id')
+          ->Join('products','po_details.code_faktur','=','products.code')->whereBetween('inbound_details.created_at', [$tgl_awal, $tgl_akhir])->get();
 
         // dd($cetak);
-        return view('laporan.cetak_produk',['produk'=>$cetak, 'stok'=> $stok ]);
+        // return view('laporan.cetak_produk',['produk'=>$cetak]);
+        return response()->json([
+            "msg" => "GET ID Method Success",
+            "data" => $cetak
+        ]);
     }
 }

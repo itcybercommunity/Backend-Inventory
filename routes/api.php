@@ -3,8 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PoController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ReturController;
+use App\Http\Controllers\InboundController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OutboundController;
@@ -70,4 +72,15 @@ Route::group(['prefix'=> 'v1'], function()
    Route::resource('supplier', SupplierController::class,[
      'except'=> ['show']
    ]);
+
+   //Laporan
+   Route::get('/cetak_laporan_penjualan/{tgl_awal}/{tgl_akhir}', [OutboundController::class, 'cetak_laporan']);
+
+   Route::get('/cetak_laporan_brg_masuk/{tgl_awal}/{tgl_akhir}', [InboundController::class, 'cetak_laporan']);
+   Route::get('/cetak_laporan_retur/{tgl_awal}/{tgl_akhir}', [ReturController::class, 'cetak_laporan']);
+   Route::get('/cetak_laporan_produk/{tgl_awal}/{tgl_akhir}', [ProductController::class, 'cetak_laporan']);
+
+   //LOgin 
+   Route::post('/login',[AuthController::class, 'login']);
+
 }); 

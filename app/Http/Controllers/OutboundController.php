@@ -112,7 +112,7 @@ class OutboundController extends Controller
         return view('laporan.penjualan');
     }
 
-    public function cetak_laporan(Request $request, $tgl_akhir)
+    public function cetak_laporan($tgl_awal, $tgl_akhir)
     {
         // dd("Tanggal Awal".$tgl_awal. "Tanggal Akhir". $tgl_akhir);
         // $this->validate($request, [
@@ -123,6 +123,10 @@ class OutboundController extends Controller
         $cetak = outbound::with('employment')->whereBetween('date', [$tgl_awal, $tgl_akhir])->get();
 
         // dd($cetak);
-        return view('laporan.cetak_penjualan',['outbound'=>$cetak]);
+        return response()->json([
+            "msg" => "GET ID Method Success",
+            "data" => $cetak
+        ]);
+        // return view('laporan.cetak_penjualan',['outbound'=>$cetak]);
     }
 }

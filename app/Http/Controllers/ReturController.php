@@ -112,13 +112,13 @@ class ReturController extends Controller
     public function cetak_laporan($tgl_awal, $tgl_akhir)
     {
         // dd("Tanggal Awal".$tgl_awal. "Tanggal Akhir". $tgl_akhir);
-        $this->validate($request, [
-            'tgl_awal' => 'required|date',
-            'tgl_akhir' => 'required|date',
-        ]);
-        $cetak = retur::whereBetween('created_at', [$tgl_awal, $tgl_akhir])->get();
+        $cetak = retur::whereBetween('date', [$tgl_awal, $tgl_akhir])->get();
 
         // dd($cetak);
-        return view('laporan.cetak_retur',['retur'=>$cetak]);
+        // return view('laporan.cetak_retur',['retur'=>$cetak]);
+        return response()->json([
+            "msg" => "GET ID Method Success",
+            "data" => $cetak
+        ]);
     }
 }
