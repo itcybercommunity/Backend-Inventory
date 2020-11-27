@@ -16,7 +16,27 @@ class DepartmentSeeder extends Seeder
     {
         //
         DB::table('departments')->insert([
-            'name' => 'Supplier'
+            'name' => 'Manager',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('departments')->insert([
+            'name' => 'Supplier',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('departments')->insert([
+            'name' => 'Driver',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        DB::table('departments')->insert([
+            'name' => 'Admin',
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
     }
 }

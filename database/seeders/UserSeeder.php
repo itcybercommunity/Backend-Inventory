@@ -23,7 +23,20 @@ class UserSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('12345'),
                 'remember_token' => Str::random(12),
-            ]
-        );
+                'created_at' => now(),
+                'updated_at' => now()
+                ]
+            );
+            DB::table('users')->insert(
+
+                [
+                    'name' => 'Admin2',
+                    'email' => 'admin2@gmail.com',
+                    'password' => bcrypt('12345'),
+                    'remember_token' => Str::random(12),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]
+            );
+        }
     }
-}

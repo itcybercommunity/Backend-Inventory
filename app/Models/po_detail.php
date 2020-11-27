@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class po_detail extends Model
 {
     use HasFactory;
-    protected $fillable = ['qty', 'price'];
+    protected $fillable = ['code_faktur', 'faktur','qty', 'price'];
 
     public function inbound_detail()
     {

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CustomerSeeder extends Seeder
+class TypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,21 +15,18 @@ class CustomerSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('customers')->insert([
-            'name' => 'Nana',
-            'address' => 'Kesesi',
+        DB::table('types')->insert([
+            'type' => 'Electronik',
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        DB::table('customers')->insert([
-            'name' => 'Supri',
-            'address' => 'Kajen',
+        DB::table('types')->insert([
+            'type' => 'Makanan',
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        DB::table('customers')->insert([
-            'name' => 'Yono',
-            'address' => 'Bogor',
+        DB::table('types')->insert([
+            'type' => 'Parabotan',
             'created_at' => now(),
             'updated_at' => now()
         ]);

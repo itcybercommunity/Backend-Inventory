@@ -16,7 +16,15 @@ class SupplierSeeder extends Seeder
     {
         DB::table('suppliers')->insert([
             'name' => 'Joni',
-            'address' => 'Dramaga Bogor'
+            'address' => 'Parung'
+        ]);
+        DB::table('suppliers')->insert([
+            'name' => 'Beo',
+            'address' => 'Tangerang'
+        ]);
+        DB::table('suppliers')->insert([
+            'name' => 'Kobe',
+            'address' => 'Jakarta'
         ]);
     }
 }
