@@ -26,7 +26,7 @@ class OutboundSeeder extends Seeder
         DB::table('outbounds')->insert([
             'id_customer' =>2,
             'id_employment' =>4,
-            'date' =>'2020-11-26',
+            'date' =>'2020-11-08',
             'total' =>10000,
             'created_at' => now(),
             'updated_at' => now()
@@ -34,7 +34,7 @@ class OutboundSeeder extends Seeder
         DB::table('outbounds')->insert([
             'id_customer' =>3,
             'id_employment' =>4,
-            'date' =>'2020-11-25',
+            'date' =>'2020-01-25',
             'total' =>100000,
             'created_at' => now(),
             'updated_at' => now()

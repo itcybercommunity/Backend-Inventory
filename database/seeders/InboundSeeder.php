@@ -25,7 +25,7 @@ class InboundSeeder extends Seeder
         ]);
         DB::table('inbounds')->insert([
             'faktur_po' => 2,
-            'date' => '2020-11-26',
+            'date' => '2020-11-08',
             'total' => 10000,
             'status' => 'OK',
             'created_at' => now(),
@@ -33,7 +33,7 @@ class InboundSeeder extends Seeder
         ]);
         DB::table('inbounds')->insert([
             'faktur_po' => 3,
-            'date' => '2020-11-25',
+            'date' => '2020-01-25',
             'total' => 2500,
             'status' => 'OK',
             'created_at' => now(),
