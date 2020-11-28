@@ -141,20 +141,76 @@ class ProductController extends Controller
         return view('laporan.produk');
     }
 
-    public function cetak_laporan($tgl_awal, $tgl_akhir)
+    public function cetak_laporan_mingguan()
     {
         // dd("Tanggal Awal".$tgl_awal. "Tanggal Akhir". $tgl_akhir);
         
-          $cetak = DB::table('outbound_details')->select(DB::raw('products.code, products.name, inbound_details.qty as barang_masuk, outbound_details.qty as barang_keluar, (inbound_details.qty - outbound_details.qty ) as total '))
-          ->Join('inbound_details','outbound_details.faktur_inbound_detail','=','inbound_details.id')
-          ->Join('po_details','inbound_details.faktur_po_detail','=','po_details.id')
-          ->Join('products','po_details.code_faktur','=','products.code')->whereBetween('inbound_details.created_at', [$tgl_awal, $tgl_akhir])->get();
-
+        //   $cetak = DB::table('outbound_details')->select(DB::raw('products.code, products.name, inbound_details.qty as barang_masuk, outbound_details.qty as barang_keluar, (inbound_details.qty - outbound_details.qty ) as total '))
+        //   ->Join('inbound_details','outbound_details.faktur_inbound_detail','=','inbound_details.id')
+        //   ->Join('po_details','inbound_details.faktur_po_detail','=','po_details.id')
+        //   ->Join('products','po_details.code_faktur','=','products.code')->whereBetween('inbound_details.created_at', [$tgl_awal, $tgl_akhir])->get();
         // dd($cetak);
         // return view('laporan.cetak_produk',['produk'=>$cetak]);
+
+        $results = DB::select( DB::raw("SELECT products.code as Kode, products.name as 'Nama Barang', inbound_details.qty as 'Barang Masuk', outbound_details.qty as 'Barang Keluar',
+        (inbound_details.qty - outbound_details.qty) as 'Total' FROM inbounds
+        LEFT join inbound_details on inbounds.faktur = inbound_details.faktur_inbound
+        LEFT join outbound_details on inbound_details.id = outbound_details.faktur_inbound_detail
+        left join outbounds on outbound_details.faktur_outbound = outbounds.faktur
+        left join po_details on inbound_details.faktur_po_detail = po_details.id
+        left join products on po_details.code_faktur = products.code
+        WHERE
+        inbounds.date BETWEEN 
+        (SELECT SUBDATE(now(),INTERVAL 20 DAY)) and now() AND
+        outbounds.date BETWEEN 
+        (SELECT SUBDATE(now(),INTERVAL 20 DAY)) and now()
+        
+        "));
         return response()->json([
             "msg" => "GET ID Method Success",
-            "data" => $cetak
+            "data" => $results
+        ]);
+    }
+    public function cetak_laporan_bulanan()
+    {
+        $results = DB::select( DB::raw("SELECT products.code as Kode, products.name as 'Nama Barang', inbound_details.qty as 'Barang Masuk', outbound_details.qty as 'Barang Keluar',
+        (inbound_details.qty - outbound_details.qty) as 'Total' FROM inbounds
+        LEFT join inbound_details on inbounds.faktur = inbound_details.faktur_inbound
+        LEFT join outbound_details on inbound_details.id = outbound_details.faktur_inbound_detail
+        left join outbounds on outbound_details.faktur_outbound = outbounds.faktur
+        left join po_details on inbound_details.faktur_po_detail = po_details.id
+        left join products on po_details.code_faktur = products.code
+        WHERE
+        inbounds.date BETWEEN 
+        (SELECT SUBDATE(now(),INTERVAL 20 DAY)) and now() AND
+        outbounds.date BETWEEN 
+        (SELECT SUBDATE(now(),INTERVAL 20 DAY)) and now()
+        
+        "));
+        return response()->json([
+            "msg" => "GET ID Method Success",
+            "data" => $results
+        ]);
+    }
+    public function cetak_laporan_tahunan()
+    {
+        $results = DB::select( DB::raw("SELECT products.code as Kode, products.name as 'Nama Barang', inbound_details.qty as 'Barang Masuk', outbound_details.qty as 'Barang Keluar',
+        (inbound_details.qty - outbound_details.qty) as 'Total' FROM inbounds
+        LEFT join inbound_details on inbounds.faktur = inbound_details.faktur_inbound
+        LEFT join outbound_details on inbound_details.id = outbound_details.faktur_inbound_detail
+        left join outbounds on outbound_details.faktur_outbound = outbounds.faktur
+        left join po_details on inbound_details.faktur_po_detail = po_details.id
+        left join products on po_details.code_faktur = products.code
+        WHERE
+        inbounds.date BETWEEN 
+        (SELECT SUBDATE(now(),INTERVAL 20 DAY)) and now() AND
+        outbounds.date BETWEEN 
+        (SELECT SUBDATE(now(),INTERVAL 20 DAY)) and now()
+        
+        "));
+        return response()->json([
+            "msg" => "GET ID Method Success",
+            "data" => $results
         ]);
     }
 }

@@ -78,7 +78,10 @@ Route::group(['prefix'=> 'v1'], function()
 
    Route::get('/cetak_laporan_brg_masuk/{tgl_awal}/{tgl_akhir}', [InboundController::class, 'cetak_laporan']);
    Route::get('/cetak_laporan_retur/{tgl_awal}/{tgl_akhir}', [ReturController::class, 'cetak_laporan']);
-   Route::get('/cetak_laporan_produk/{tgl_awal}/{tgl_akhir}', [ProductController::class, 'cetak_laporan']);
+   // Route::get('/cetak_laporan_produk/{tgl_awal}/{tgl_akhir}', [ProductController::class, 'cetak_laporan']);
+   Route::get('/cetak_laporan_produk_mingguan', [ProductController::class, 'cetak_laporan_mingguan']);
+   Route::get('/cetak_laporan_produk_bulanan', [ProductController::class, 'cetak_laporan_bulanan']);
+   Route::get('/cetak_laporan_produk_tahunan', [ProductController::class, 'cetak_laporan_tahunan']);
 
    //LOgin 
    Route::post('/login',[AuthController::class, 'login']);
