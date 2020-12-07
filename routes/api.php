@@ -62,7 +62,7 @@ Route::group(['prefix'=> 'v1'], function()
    ]);
 
    Route::resource('employment', EmploymentController::class,[
-     'except'=> ['show']
+   //   'except'=> ['show']
    ]);
 
    Route::resource('customer', CustomerController::class,[

@@ -6,8 +6,11 @@ use App\Models\department;
 use App\Models\employment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\BaseLoginController;
+use Auth;
+use Validator;
 
-class EmploymentController extends Controller
+class EmploymentController extends BaseLoginController
 {
     /**
      * Display a listing of the resource.
@@ -78,22 +81,85 @@ class EmploymentController extends Controller
         // ]);
 
         // return redirect('/employment')->with('message', 'Data Berhasil Disimpan');
+        // validate data
+        $validator = Validator::make($request->all(), [
+            'name'     => 'required|min:3|max:5',
+            'gender'   => 'required',
+            'email'   => 'required|email',
+            'password'   => 'required',
+            'phone'   => 'required',
+            'address'   => 'required',
+            'id_department'   => 'required'
+        ],
+            [
+                'name.required' => 'Masukkan Title Post !',
+                'gender.required' => 'Masukkan JK Post !',
+                'email.required' => 'Masukkan email Post !',
+                'email.email' => 'Masukan alamat email yang benar',
+                'password.required' => 'Masukkan password Post !',
+                'phone.required' => 'Masukkan Phone Post !',
+                'address.required' => 'Masukkan Alamat Post !',
+                'id_department.required' => 'Masukkan Department Post !',
+            ]
+        );
 
-        $employment = new employment;
-        $employment->name = $request->name;
-        $employment->gender = $request->gender;
-        $employment->email = $request->email;
-        $employment->password = bcrypt($request->password);
-        $employment->phone = $request->phone;
-        $employment->address = $request->address;
-        $employment->id_department = $request->id_department;
+        if($validator->fails()) {
 
-        $employment->save();
+            return response()->json([
+                'success' => false,
+                'message' => 'Silahkan Isi Bidang Yang Kosong',
+                'data'    => $validator->errors()
+            ],401);
 
-        return response()->json([
-            'msg' => 'Post Method Success',
-            'data' => $employment
-        ], 200);
+        } else {
+
+            $employment = employment::create([
+                'name'     => $request->input('name'),
+                'gender'   => $request->input('gender'),
+                'email'   => $request->input('email'),
+                'password'   => bcrypt($request->input('password')),
+                'phone'   => $request->input('phone'),
+                'address'   => $request->input('address'),
+                'id_department'   => $request->input('id_department')
+            ]);
+
+            if ($employment) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'POST Method Success',
+                    'data' => $employment
+                ], 200);
+            } 
+        
+        }
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => ['required', 'string'],
+    //         'gender' => ['required', 'string'],
+    //         'email' => ['required', 'string', 'email'],
+    //         'password' => ['required', 'string'],
+    //         'phone' => ['required', 'string'],
+    //         'address' => ['required', 'string'],
+    //         'id_department' => ['required', 'numeric']
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return $this->responseError('Add Items Failed', 422, $validator->errors());
+    //     }else{
+    //         $employment = new employment;
+    //         $employment->name = $request->name;
+    //         $employment->gender = $request->gender;
+    //         $employment->email = $request->email;
+    //         $employment->password = bcrypt($request->password);
+    //         $employment->phone = $request->phone;
+    //         $employment->address = $request->address;
+    //         $employment->id_department = $request->id_department;
+
+    //         $employment->save();
+
+    //         return response()->json([
+    //             'msg' => 'Post Method Success',
+    //             'data' => $employment
+    //         ], 200);
+    // }
     }
 
     /**
@@ -104,7 +170,21 @@ class EmploymentController extends Controller
      */
     public function show($id)
     {
-        //
+        // $post = employment::whereId($id)->first();
+        $post = employment::where('nip',$id)->first();
+
+
+        if ($post) {
+            return response()->json([
+                'msg' => 'Detail get by ID',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'msg'    => "Detail Method Failed ".$id. " not found"
+            ], 422);
+        }
+    
     }
 
     /**
@@ -154,8 +234,20 @@ class EmploymentController extends Controller
         // return redirect('/employment')->with('message', 'Data Berhasil Disimpan');
 
         $employment = employment::where('nip',$id)->first();
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string'],
+            'gender' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+            'phone' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'id_department' => ['required', 'numeric']
+        ]);
 
         if ($employment) {
+            if ($validator->fails()) {
+                return $this->responseError('Update Items Failed', 422, $validator->errors());
+            }
             $employment->name = $request->name ? $request->name : $employment->name;
             $employment->gender = $request->gender ? $request->gender : $employment->gender;
             $employment->email = $request->email ? $request->email : $employment->email;
@@ -171,8 +263,8 @@ class EmploymentController extends Controller
             ]);
         }
         return response()->json([
-            "msg" => "PUT Method Failed ".$id
-        ]);
+            "msg" => "PUT Method Failed ".$id. " not found"
+        ], 404);
 
     }
 
@@ -198,6 +290,6 @@ class EmploymentController extends Controller
     }
     return response()->json([
         "msg" => "Delete Method Failed ".$id. " Not Found"
-    ], 400);
+    ], 404);
     }
 }
